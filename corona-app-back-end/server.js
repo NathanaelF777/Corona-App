@@ -14,7 +14,7 @@ mongoose.connection.on('error', err => console.log(err.message + ' is Mongod not
 mongoose.connection.on('disconnected', () => console.log('mongo disconnected'))
 
 // ** on connection
-mongoose.connect('mongodb://localhost:27017/corona', { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost:27017/corona-profiles', { useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.connection.once('open', () => (
     console.log('Mongoose connection established.')
 ))
@@ -37,11 +37,13 @@ mongoose.connection.once('open', () => (
 
 // controllers
 
+const coronaAppController = require('./controllers/profiles.js')
+app.use('/corona-app', coronaAppController)
 
 // Routes
 
 app.get('/', (req, res) => {
-    res.send('hello world')
+    res.redirect('/corona-app')
 })
 
 // Listen
