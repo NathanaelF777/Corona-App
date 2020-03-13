@@ -11,8 +11,9 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   Profile.create(req.body, (error, createdProfile) => {
+      console.log(createdProfile);
     if (error) {
       res.status(400).json({ error: error.message })
     }
