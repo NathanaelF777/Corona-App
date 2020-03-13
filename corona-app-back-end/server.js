@@ -4,7 +4,7 @@ const express = require('express');
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
-const PORT = 3000
+const PORT = 3003
 
 
 // Database Connection
@@ -21,19 +21,19 @@ mongoose.connection.once('open', () => (
 
 // Middleware
 
-// app.use(express.json()); //use .json(), not .urlencoded()
-// const whitelist = ['http://localhost:3000', 'https://fathomless-sierra-68956.herokuapp.com']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
+app.use(express.json()); //use .json(), not .urlencoded()
+const whitelist = ['http://localhost:3000', 'https://fathomless-sierra-68956.herokuapp.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
-// app.use(cors(corsOptions)) // all routes are now exposed, sometimes you just want to limit access (ie OMDB - it's ok for anyone to see the movies, but you don't want just anyone updating the movies)
+app.use(cors(corsOptions)) // all routes are now exposed, sometimes you just want to limit access (ie OMDB - it's ok for anyone to see the movies, but you don't want just anyone updating the movies)
 
 // controllers
 
