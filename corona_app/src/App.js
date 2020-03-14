@@ -1,26 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Profiles from "./components/Profiles";
+import NewProfile from "./components/NewProfile";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {};
+    this.state.addProfile = false;
+    this.state.data = [
+      {
+        _id: "1",
+        gender: "Male",
+        age: "70",
+        location: "Kirkland",
+        diagnosed: true
+      },
+      {
+        _id: "2",
+        gender: "Female",
+        age: "50",
+        location: "Kirkland",
+        diagnosed: false
+      },
+      {
+        _id: "3",
+        gender: "Female",
+        age: "60",
+        location: "New York",
+        diagnosed: true
+      }
+    ];
+
+    this.handleAddProfile = this.handleAddProfile.bind(this);
+    this.handleProfileAdded = this.handleProfileAdded.bind(this);
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <h1>Corona Stats</h1>
+        {this.state.addProfile ? (
+          <NewProfile handleProfileAdded={this.handleProfileAdded} />
+        ) : (
+          <div>
+            <button className="btn btn-info" onClick={this.handleAddProfile}>
+              Add new profile
+            </button>
+            <Profiles data={this.state.data} />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  handleAddProfile() {
+    this.setState({
+      addProfile: true
+    });
+  }
+
+  handleProfileAdded(profile) {
+    console.log(profile);
+    this.setState({
+      data: [profile, ...this.state.data],
+      addProfile: false
+    });
+  }
 }
 
 export default App;
