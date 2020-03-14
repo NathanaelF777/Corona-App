@@ -2,14 +2,31 @@ import React from "react";
 import "./Profiles.css";
 
 class Profiles extends React.Component {
-  render() {
-    let count = 0;
-    for (const p of this.props.data) {
-      if (p.diagnosed) {
-        count++;
-      }
+    constructor(props){
+        super(props)
+        this.state = {
+            count: 0
+        }
+        this.updateCount = this.updateCount.bind(this)
     }
 
+updateCount(){ //Need to run this function whenever a new patient is submitted.
+    let tempCount = this.state.count
+    for (const p of this.props.data) {
+      if (p.diagnosed) {
+          tempCount = tempCount + 1
+      }
+    }
+    this.setState({
+        count: tempCount
+    })
+}
+
+componentDidMount(){
+    this.updateCount()
+}
+
+  render() {
     return (
       <div className="profiles-list">
         <table className="table table-striped">
@@ -45,7 +62,7 @@ class Profiles extends React.Component {
           <tfoot>
             <tr>
               <td colSpan="3">Total diagnosed:</td>
-              <td>{count}</td>
+              <td>{this.state.count}</td>
             </tr>
           </tfoot>
         </table>
