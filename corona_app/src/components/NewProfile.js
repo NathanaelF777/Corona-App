@@ -7,6 +7,18 @@ class NewProfile extends React.Component {
     this.handleAddProfile = this.handleAddProfile.bind(this);
   }
 
+  handleAddProfile() {
+    const profile = {
+      // Fill this up with real data ...
+      gender: "Male",
+      age: 55,
+      location: "General Assembly",
+      diagnosed: true
+    };
+
+    this.props.handleProfileAdded(profile);
+  }
+
   render() {
     return (
       <div>
@@ -94,17 +106,6 @@ class NewProfile extends React.Component {
     );
   }
 
-  handleAddProfile() {
-    const profile = {
-      // Fill this up with real data ...
-      gender: "Male",
-      age: 55,
-      location: "General Assembly",
-      diagnosed: true
-    };
-
-    this.props.handleProfileAdded(profile);
-  }
 }
 
 export default NewProfile;
