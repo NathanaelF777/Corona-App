@@ -2,12 +2,38 @@ import React from 'react';
 import Profiles from './components/Profiles';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    
+    this.state = {};
+    this.state.data = [
+      {
+        gender: "Male",
+        age: "70",
+        location: "Kirkland",
+        diagnosed: true
+      },
+      {
+        gender: "Female",
+        age: "50",
+        location: "Kirkland",
+        diagnosed: false
+      },
+      {
+        gender: "Female",
+        age: "60",
+        location: "New York",
+        diagnosed: true
+      }
+    ]
+  }
+
   render() {
     return (
         <div className="container">
             <h1> Corona Stats </h1>
 
-            <Profiles />
+            <Profiles data={this.state.data} />
             {/* <h3>Name</h3>
             <h3>Age</h3>
             <h3>Gender</h3>
