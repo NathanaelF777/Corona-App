@@ -2,15 +2,14 @@ import React from "react";
 import "./Profiles.css";
 
 class Profiles extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: props.data
-    };
-  }
-
   render() {
+    let count = 0;
+    for (const p of this.props.data) {
+      if (p.diagnosed) {
+        count++;
+      }
+    }
+
     return (
       <div className="profiles-list">
         <table className="table table-striped">
@@ -24,7 +23,7 @@ class Profiles extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.data.map(profile => {
+            {this.props.data.map(profile => {
               return (
                 <tr key={profile._id}>
                   <td className="gender">{profile.gender}</td>
@@ -43,6 +42,12 @@ class Profiles extends React.Component {
               );
             })}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="3">Total diagnosed:</td>
+              <td>{count}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     );
