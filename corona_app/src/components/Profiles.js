@@ -1,5 +1,5 @@
-import React from 'react';
-import './Profiles.css';
+import React from "react";
+import "./Profiles.css";
 
 class Profiles extends React.Component {
   constructor(props) {
@@ -12,25 +12,32 @@ class Profiles extends React.Component {
 
   render() {
     return (
-      <div class="profiles-list">
-        <table class="table table-striped">
+      <div className="profiles-list">
+        <table className="table table-striped">
           <thead>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Location</th>
-            <th>Diagnosed</th>
-            <th>{" "}</th>
+            <tr>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Location</th>
+              <th>Diagnosed</th>
+              <th> </th>
+            </tr>
           </thead>
           <tbody>
             {this.state.data.map(profile => {
               return (
                 <tr key={profile._id}>
-                  <td class="gender">{profile.gender}</td>
-                  <td class="age">{profile.age}</td>
-                  <td class="location">{profile.location}</td>
-                  <td class="diagnosed">{profile.diagnosed ? "Y" : " "}</td>
-                  <td class="commands">
-                    <button class="btn btn-danger">X</button>
+                  <td className="gender">{profile.gender}</td>
+                  <td className="age">{profile.age}</td>
+                  <td className="location">{profile.location}</td>
+                  <td className="diagnosed">{profile.diagnosed ? "Y" : " "}</td>
+                  <td className="commands">
+                    <button className="btn btn-info">
+                      <i className="fa fa-edit"></i>
+                    </button>
+                    <button className="btn btn-danger">
+                      <i className="fa fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
               );

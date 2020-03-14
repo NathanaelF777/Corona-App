@@ -4,22 +4,25 @@ import Profiles from './components/Profiles';
 class App extends React.Component {
   constructor() {
     super();
-    
+
     this.state = {};
     this.state.data = [
       {
+        _id: "1",
         gender: "Male",
         age: "70",
         location: "Kirkland",
         diagnosed: true
       },
       {
+        _id: "2",
         gender: "Female",
         age: "50",
         location: "Kirkland",
         diagnosed: false
       },
       {
+        _id: "3",
         gender: "Female",
         age: "60",
         location: "New York",
