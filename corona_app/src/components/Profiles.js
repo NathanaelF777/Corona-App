@@ -18,7 +18,7 @@ class Profiles extends React.Component {
           </thead>
 
           <tbody>
-            {this.props.data.map(profile => {
+            {this.props.data.map((profile, i) => {
               return (
                 <tr key={profile._id}>
                   <td className="gender">{profile.gender}</td>
@@ -28,7 +28,7 @@ class Profiles extends React.Component {
                   <td className="commands">
                     <button
                     className="btn btn-info"
-                    onClick={() => {this.props.handleEditProfile(profile)}}>
+                    onClick={() => {this.props.handleEditProfile(i)}}>
                       <i className="fa fa-edit"></i>
                     </button>
                     <button

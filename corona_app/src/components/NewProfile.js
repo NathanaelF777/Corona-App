@@ -1,5 +1,5 @@
 import React from "react";
-import "./NewProfile.css";
+import "./New|EditProfile.css";
 
 class NewProfile extends React.Component {
   constructor(props) {
@@ -15,30 +15,34 @@ class NewProfile extends React.Component {
       diagnosed: true,
       symptomsClickValue: {}
     };
-
+    this.handleAddMore = this.handleAddMore.bind(this)
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleInputChange(event) {
     event.preventDefault()
+
+
     const target = event.target;
     const value = target.value;
     const name = target.name;
     // Change background of clicked button
     const buttonClick = () => {
-      event.target.style.color = 'black'
       event.target.style.backgroundColor = '#8eedaf'
     }
     // Allow for clicking and 'unclicking.' Push into array if clicked, remove if 'unclicked'
     const controlSymptomsArrayInput = () => {
-      // If button is clicked
-      if (this.state.symptomsClickValue[value]) {
+      // Change button clicked state
+      this.state.symptomsClickValue[value] = !this.state.symptomsClickValue[value]
+      this.setState({symptomsClickValue: this.state.symptomsClickValue})
+      // If button is 'unclicked'
+      if (!this.state.symptomsClickValue[value]) {
         event.target.style.backgroundColor = '#ddd'
         const index = this.state.symptoms.findIndex((symptom => symptom === value))
         this.state.symptoms.splice(index, 1)
 
-      // If button is not clicked
+      // If button is clicked
       } else {
         // If there are no symptoms, push first symptom into the array
         if (this.state.symptoms.length === 0) {
@@ -46,19 +50,18 @@ class NewProfile extends React.Component {
 
         // Ensure that each symptom is pushed only once
         } else {
+          let check = 1
           for (let i = 0; i < this.state.symptoms.length; i++) {
             if (value !== this.state.symptoms[i]) {
-            this.state.symptoms.push(value)
+              check++
             }
+          }
+          if (check = this.state.symptoms.length) {
+            this.state.symptoms.push(value)
           }
         }
       }
-      // Change button clicked state
-      this.state.symptomsClickValue[value] = !this.state.symptomsClickValue[value]
-      this.setState({
-        symptomsClickValue: this.state.symptomsClickValue,
-        symptoms: this.state.symptoms
-      })
+      this.setState({symptoms: this.state.symptoms})
     }
 
     if (target.className === 'btn') {
@@ -77,9 +80,27 @@ class NewProfile extends React.Component {
     }
   }
 
+  handleAddMore(event) {
+    event.preventDefault()
+    // Push value into symptoms array
+    const oldInput = document.querySelector('.additionalSymptoms')
+    this.state.symptoms.push(oldInput.value)
+    this.setState({symptoms: this.state.symptoms})
+
+    // Create new input and remove old input
+    const newInput = document.createElement("INPUT")
+    newInput.style.width = `${oldInput.offsetWidth}px`
+    oldInput.remove()
+    const addMore = document.querySelector('#addMore')
+    setTimeout(function(){
+      newInput.className = 'additionalSymptoms'
+      newInput.placeholder = 'Type other symptom here'
+      addMore.insertAdjacentElement('beforebegin', newInput)
+    }, 500);
+  }
+
   handleAddProfile(event) {
     event.preventDefault()
-
     const profile = {
       name: this.state.name,
       age: this.state.age,
@@ -87,8 +108,7 @@ class NewProfile extends React.Component {
       location: this.state.location,
       symptoms: this.state.symptoms,
       tested: this.state.tested,
-      diagnosed: this.state.diagnosed,
-      condition: this.state.condition
+      diagnosed: this.state.diagnosed
     }
 
     this.props.handleProfileAdded(profile);
@@ -97,7 +117,7 @@ class NewProfile extends React.Component {
   render() {
     return (
       <div>
-        <h1>Create new profile</h1>
+        <h1>Add new profile</h1>
         <form onSubmit={this.handleAddProfile}>
           <table className="table table-info">
             <tbody>
@@ -183,14 +203,25 @@ class NewProfile extends React.Component {
                   onClick={this.handleInputChange}/>
                   </div>
                   {this.state.otherSymptomsInput
-                    ? <div style={{marginTop: "1vw"}}>
+                    ? <div style={{marginTop: "2vw"}}>
                         <input
+                        className="additionalSymptoms"
                         style={{width:
                           document.getElementById('Cough').offsetWidth +
                           document.getElementById('Fever').offsetWidth +
                           document.getElementsByName('other')[0].offsetWidth}}
                         type="text"
-                        placeholder="Type other symptoms here"/>
+                        placeholder="Type other symptom here"/>
+                        <button
+                        style={{
+                          padding: '2px',
+                          marginTop: 0
+                        }}
+                        id="addMore"
+                        className="btn"
+                        onClick={this.handleAddMore}>
+                          Add
+                        </button>
                       </div>
                     : <div/>
                   }
@@ -233,7 +264,7 @@ class NewProfile extends React.Component {
           <input
           type="submit"
           className="btn btn-primary"
-          value="Add Profile"/>
+          value="Add profile"/>
         </form>
 
       </div>

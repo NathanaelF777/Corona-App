@@ -11,10 +11,6 @@ if (process.env.NODE_ENV === 'development') {
   baseURL = 'heroku backend url:'
 }
 
-console.log('current base URL:', baseURL)
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +24,7 @@ class App extends React.Component {
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleProfileAdded = this.handleProfileAdded.bind(this);
     this.deleteData = this.deleteData.bind(this)
-    // this.editData = this.editData.bind(this)
+    this.editData = this.editData.bind(this)
     this.handleEditProfile = this.handleEditProfile.bind(this)
     this.updateCount = this.updateCount.bind(this)
   }
@@ -68,16 +64,15 @@ class App extends React.Component {
     });
   }
 
-  handleEditProfile(profile) {
+  handleEditProfile(i) {
     this.setState({
       editProfile: true,
-      currentProfile: profile
+      currentIndex: i
     });
   }
 
   async handleProfileAdded (profile) {
     this.setState({addProfile: false})
-
     try {
       let response =   await fetch(baseURL + '/corona-app', {
         method: 'POST',
@@ -109,25 +104,24 @@ class App extends React.Component {
    }
   }
 
-//   async editData (profile) {
-//   try{
-//   let response = await fetch(baseURL + '/holidays/' + profile._id, {
-//     method: 'PUT',
-//     body: JSON.stringify({profile}),
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   })
-//   let updatedHoliday = await response.json()
-//   const foundHoliday = this.state.holidays.findIndex(foundItem => foundItem._id === holiday._id)
-//   const copyHolidays = [...this.state.holidays]
-//   copyHolidays[foundHoliday].celebrated = updatedHoliday.celebrated
-//   console.log(updatedHoliday)
-//   this.setState({holidays: copyHolidays})
-//   }catch(e){
-//     console.error(e)
-//   }
-// }
+  async editData (profile) {
+  this.setState({editProfile: false})
+
+  try{
+  let response = await fetch(baseURL + '/corona-app/' + this.state.data[this.state.currentIndex]._id, {
+    method: 'PUT',
+    body: JSON.stringify(profile),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  let updatedProfile = await response.json()
+  this.state.data[this.state.currentIndex] = updatedProfile
+  this.setState({data: this.state.data})
+  }catch(e){
+    console.error(e)
+  }
+}
 
   render() {
     return (
@@ -139,8 +133,8 @@ class App extends React.Component {
         ) : (
           this.state.editProfile ? (
             <EditProfile
-            handleProfileAdded={this.handleProfileAdded}
-            currentProfile={this.state.currentProfile}/>
+            editData={this.editData}
+            currentProfile={this.state.data[this.state.currentIndex]}/>
           ) : (
             <div>
               <h1>Corona Stats</h1>
