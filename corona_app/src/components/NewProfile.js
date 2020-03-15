@@ -194,13 +194,6 @@ class NewProfile extends React.Component {
                       </div>
                     : <div/>
                   }
-                  {/*<input
-                  type="text"
-                  size="60"
-                  name="symptoms"
-                  placeholder="symptoms, separated, by, commas"
-                  value={this.state.value}
-                  onChange={this.handleInputChange}/>*/}
                 </td>
               </tr>
 
@@ -214,8 +207,8 @@ class NewProfile extends React.Component {
                   onChange={this.handleInputChange}
                   required>
                   <option value=""/>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
                   </select>
                 </td>
               </tr>
@@ -229,8 +222,8 @@ class NewProfile extends React.Component {
                   onChange={this.handleInputChange}
                   required>
                     <option value=""/>
-                    <option value="true">Positive</option>
-                    <option value="false">Negative</option>
+                    <option value={true}>Positive</option>
+                    <option value={false}>Negative</option>
                   </select>
                 </td>
               </tr>

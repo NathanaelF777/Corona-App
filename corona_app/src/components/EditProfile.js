@@ -97,6 +97,7 @@ class EditProfile extends React.Component {
     return (
       <div>
         <h1>Profile: {this.props.currentProfile._id}</h1>
+
         <form onSubmit={this.handleAddProfile}>
           <table className="table table-info">
             <tbody>
@@ -125,8 +126,10 @@ class EditProfile extends React.Component {
                     <option value={this.props.currentProfile.gender}>
                     {this.props.currentProfile.gender}
                     </option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    {this.props.currentProfile.gender === "Male" ?
+                      <option value="Female">Female</option>
+                    : <option value="Male">Male</option>}
+
                   </select>
                 </td>
               </tr>
@@ -210,13 +213,17 @@ class EditProfile extends React.Component {
                   onChange={this.handleInputChange}
                   required>
                   <option value={this.props.currentProfile.tested}>
-                    {this.props.currentProfile.tested.toString()}
+                    {this.props.currentProfile.tested ?
+                      'Yes'
+                    : 'No'}
                   </option>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  {this.props.currentProfile.tested ?
+                    <option value={false}>No</option>
+                  : <option value={true}>Yes</option>}
                   </select>
                 </td>
               </tr>
+
               <tr>
                 <th>Diagnosed</th>
                 <td>
@@ -226,11 +233,14 @@ class EditProfile extends React.Component {
                   name="diagnosed"
                   onChange={this.handleInputChange}
                   required>
-                    <option value={this.props.currentProfile.diagnosed}>
-                      {this.props.currentProfile.diagnosed.toString()}
-                    </option>
-                    <option value="true">Positive</option>
-                    <option value="false">Negative</option>
+                  <option value={this.props.currentProfile.diagnosed}>
+                    {this.props.currentProfile.diagnosed ?
+                      'Positive'
+                    : 'Negative'}
+                  </option>
+                  {this.props.currentProfile.diagnosed ?
+                    <option value={false}>Negative</option>
+                  : <option value={true}>Positive</option>}
                   </select>
                 </td>
               </tr>
