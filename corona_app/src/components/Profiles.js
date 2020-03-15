@@ -1,34 +1,25 @@
 import React from "react";
 import "./Profiles.css";
 
-let baseURL = ''
-
-if (process.env.NODE_ENV === 'development') {
-  baseURL = 'http://localhost:3003'
-} else {
-  baseURL = 'heroku backend url:'
-}
-
 class Profiles extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-        }
-    }
+  constructor(props){
+    super(props)
+  }
 
   render() {
+
     return (
       <div className="profiles-list">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Location</th>
-              <th>Diagnosed</th>
-              <th> </th>
+              <th className="text-center">Gender</th>
+              <th className="text-center">Age</th>
+              <th className="text-center">Location</th>
+              <th className="text-center">Diagnosed</th>
             </tr>
           </thead>
+
           <tbody>
             {this.props.data.map(profile => {
               return (
@@ -51,6 +42,7 @@ class Profiles extends React.Component {
               );
             })}
           </tbody>
+
           <tfoot>
             <tr>
               <td colSpan="3">Total diagnosed:</td>

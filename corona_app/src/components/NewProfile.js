@@ -1,4 +1,5 @@
 import React from "react";
+import "./NewProfile.css";
 
 class NewProfile extends React.Component {
   constructor(props) {
@@ -6,11 +7,11 @@ class NewProfile extends React.Component {
     this.state = {
       name: '',
       age: '',
-      gender: 'Male',
-      location: '',
+      gender: '',
+      location: 'Not given',
       symptoms: [],
       tested: true,
-      diagnosed: true,
+      diagnosed: true
     };
 
     this.handleAddProfile = this.handleAddProfile.bind(this);
@@ -18,13 +19,25 @@ class NewProfile extends React.Component {
   }
 
   handleInputChange(event) {
+    event.preventDefault()
     const target = event.target;
     const value = target.value;
     const name = target.name;
+    const buttonClick = () => {
+        event.target.style.color = 'black'
+        event.target.style.backgroundColor = '#8eedaf'
+    }
 
-    this.setState({
-      [name]: value
-    });
+    if (target.className === 'btn') {
+      buttonClick()
+    }
+
+    if (name === '') {
+      this.state.symptoms.push(value)
+      this.setState({symptoms: this.state.symptoms})
+    } else {
+      this.setState({[name]: value});
+    }
   }
 
   handleAddProfile(event) {
@@ -65,9 +78,11 @@ class NewProfile extends React.Component {
                 <th>Gender</th>
                 <td>
                   <select
+                  className="btn"
                   name="gender"
-                  value={this.state.gender}
-                  onChange={this.handleInputChange}>
+                  onChange={this.handleInputChange}
+                  required>
+                    <option value=''/>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -81,7 +96,8 @@ class NewProfile extends React.Component {
                   type="number"
                   name="age"
                   value={this.state.age}
-                  onChange={this.handleInputChange}/>
+                  onChange={this.handleInputChange}
+                  required/>
                 </td>
               </tr>
 
@@ -92,7 +108,7 @@ class NewProfile extends React.Component {
                   type="text"
                   placeholder="New York, NY"
                   name="location"
-                  value={this.state.location}
+
                   onChange={this.handleInputChange}/>
                 </td>
               </tr>
@@ -100,13 +116,36 @@ class NewProfile extends React.Component {
               <tr>
                 <th>Symptoms</th>
                 <td>
+                <a href="">
                   <input
+                  className="btn"
+                  type="button"
+                  value="Cough"
+                  onClick={this.handleInputChange}/>
+                  <input
+                  className="btn"
+                  type="button"
+                  value="Fever"
+                  onClick={this.handleInputChange}/>
+                  <input
+                  className="btn"
+                  type="button"
+                  value="Shortness of breath"
+                  onClick={this.handleInputChange}/>
+                  <input
+                  className="btn"
+                  name="other"
+                  type="button"
+                  value="Other"
+                  onClick={this.handleInputChange}/>
+                  </a>
+                  {/*<input
                   type="text"
                   size="60"
                   name="symptoms"
-                  placeholder="symptoms, separated, by, ommas"
+                  placeholder="symptoms, separated, by, commas"
                   value={this.state.value}
-                  onChange={this.handleInputChange}/>
+                  onChange={this.handleInputChange}/>*/}
                 </td>
               </tr>
 
@@ -127,6 +166,7 @@ class NewProfile extends React.Component {
                 <th>Diagnosed</th>
                 <td>
                   <select
+                  className="btn"
                   name="diagnosed"
                   value={this.state.diagnosed}
                   onChange={this.handleInputChange}>

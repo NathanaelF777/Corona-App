@@ -1,0 +1,8 @@
+a,
+a:hover {
+  color: black;
+}
+
+a .btn {
+  margin-left: 1vw;
+}

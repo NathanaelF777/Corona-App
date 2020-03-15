@@ -86,10 +86,9 @@ class App extends React.Component {
 
   async deleteData (id){
    try {
-   let response = await fetch(baseURL + '/corona-app/' +  id, {
+   await fetch(baseURL + '/corona-app/' +  id, {
       method: 'DELETE'
       })
-      let data = await response.json()
       const selectedData = this.state.data.findIndex(profile => profile._id === id)
       this.state.data.splice(selectedData, 1)
       this.setState({data: this.state.data})
