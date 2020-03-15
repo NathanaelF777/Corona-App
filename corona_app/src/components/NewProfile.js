@@ -3,18 +3,43 @@ import React from "react";
 class NewProfile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: '',
+      age: '',
+      gender: 'Male',
+      location: '',
+      symptoms: [],
+      tested: true,
+      diagnosed: true,
+    };
 
     this.handleAddProfile = this.handleAddProfile.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleAddProfile() {
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleAddProfile(event) {
+    event.preventDefault()
+
     const profile = {
-      // Fill this up with real data ...
-      gender: "Male",
-      age: 55,
-      location: "General Assembly",
-      diagnosed: true
-    };
+      name: this.state.name,
+      age: this.state.age,
+      gender: this.state.gender,
+      location: this.state.location,
+      symptoms: this.state.symptoms,
+      tested: this.state.tested,
+      diagnosed: this.state.diagnosed,
+      condition: this.state.condition
+    }
 
     this.props.handleProfileAdded(profile);
   }
@@ -22,75 +47,89 @@ class NewProfile extends React.Component {
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleAddProfile}>
           <table className="table table-info">
             <tbody>
               <tr>
-                <th>Name (leave blank if you want to be anonymous)</th>
+                <th>Name</th>
                 <td>
-                  <input size="60" type="text" name="name" />
+                  <input
+                  size="60"
+                  type="text"
+                  name="name"
+                  placeholder="(leave blank to remain anonymous)"/>
                 </td>
               </tr>
+
               <tr>
                 <th>Gender</th>
                 <td>
-                  <select name="gender">
+                  <select
+                  name="gender"
+                  value={this.state.gender}
+                  onChange={this.handleInputChange}>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 </td>
               </tr>
+
               <tr>
                 <th>Age</th>
                 <td>
-                  <input type="number" name="age" />
+                  <input
+                  type="number"
+                  name="age"
+                  value={this.state.age}
+                  onChange={this.handleInputChange}/>
                 </td>
               </tr>
+
               <tr>
                 <th>Location (City, State)</th>
                 <td>
-                  <input type="text" placeholder="New York, NY" name="location" />
+                  <input
+                  type="text"
+                  placeholder="New York, NY"
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.handleInputChange}/>
                 </td>
               </tr>
+
               <tr>
                 <th>Symptoms</th>
                 <td>
-                  <div>
-                    <label>
-                      Cough
-                      <input type="checkbox" name="sym_cough" id="sym_cough" />
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      Fever
-                      <input type="checkbox" name="sym_fever" id="sym_fever" />
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <label>
-                      Shortness of breath
-                      <input type="checkbox" name="sym_sob" id="sym_sob" />
-                    </label>
-                  </div>
-                  <div>
-                    <input type="text" size="60" name="sym_others" placeholder="comma, separated, symptoms" />
-                  </div>
+                  <input
+                  type="text"
+                  size="60"
+                  name="symptoms"
+                  placeholder="symptoms, separated, by, ommas"
+                  value={this.state.value}
+                  onChange={this.handleInputChange}/>
                 </td>
               </tr>
+
               <tr>
                 <th>Tested</th>
                 <td>
                   <label>
                     Tested
-                    <input type="checkbox" name="tested" />
+                    <input
+                    type="checkbox"
+                    name="tested"
+                    value={this.state.tested}
+                    onChange={this.handleInputChange}/>
                   </label>
                 </td>
               </tr>
               <tr>
                 <th>Diagnosed</th>
                 <td>
-                  <select name="diagnosed">
+                  <select
+                  name="diagnosed"
+                  value={this.state.diagnosed}
+                  onChange={this.handleInputChange}>
                     <option value="true">Positive</option>
                     <option value="false">Negative</option>
                   </select>
@@ -98,10 +137,13 @@ class NewProfile extends React.Component {
               </tr>
             </tbody>
           </table>
+
+          <input
+          type="submit"
+          className="btn btn-primary"
+          value="Add Profile"/>
         </form>
-        <button className="btn btn-primary" onClick={this.handleAddProfile}>
-          Add Profile
-        </button>
+
       </div>
     );
   }
