@@ -1,6 +1,7 @@
 import React from "react";
 import Profiles from "./components/Profiles";
 import NewProfile from "./components/NewProfile";
+import EditProfile from "./components/EditProfile";
 
 let baseURL = ''
 
@@ -19,6 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {
         addProfile: false,
+        editProfile: false,
         data: [],
         count: 0
     };
@@ -26,6 +28,8 @@ class App extends React.Component {
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleProfileAdded = this.handleProfileAdded.bind(this);
     this.deleteData = this.deleteData.bind(this)
+    // this.editData = this.editData.bind(this)
+    this.handleEditProfile = this.handleEditProfile.bind(this)
     this.updateCount = this.updateCount.bind(this)
   }
 
@@ -64,6 +68,13 @@ class App extends React.Component {
     });
   }
 
+  handleEditProfile(profile) {
+    this.setState({
+      editProfile: true,
+      currentProfile: profile
+    });
+  }
+
   async handleProfileAdded (profile) {
     this.setState({addProfile: false})
 
@@ -98,25 +109,53 @@ class App extends React.Component {
    }
   }
 
+//   async editData (profile) {
+//   try{
+//   let response = await fetch(baseURL + '/holidays/' + profile._id, {
+//     method: 'PUT',
+//     body: JSON.stringify({profile}),
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   })
+//   let updatedHoliday = await response.json()
+//   const foundHoliday = this.state.holidays.findIndex(foundItem => foundItem._id === holiday._id)
+//   const copyHolidays = [...this.state.holidays]
+//   copyHolidays[foundHoliday].celebrated = updatedHoliday.celebrated
+//   console.log(updatedHoliday)
+//   this.setState({holidays: copyHolidays})
+//   }catch(e){
+//     console.error(e)
+//   }
+// }
+
   render() {
     return (
       <div className="container">
-        <h1>Corona Stats</h1>
         {this.state.addProfile ? (
           <NewProfile
           handleProfileAdded={this.handleProfileAdded}
           data={this.state.data}/>
         ) : (
-          <div>
-            <button className="btn btn-info" onClick={this.handleAddProfile}>
-              Add new profile
-            </button>
-            <Profiles
-            setChanged={this.setChanged}
-            deleteData={this.deleteData}
-            data={this.state.data}
-            count={this.state.count}/>
-          </div>
+          this.state.editProfile ? (
+            <EditProfile
+            handleProfileAdded={this.handleProfileAdded}
+            currentProfile={this.state.currentProfile}/>
+          ) : (
+            <div>
+              <h1>Corona Stats</h1>
+              <button className="btn btn-info" onClick={this.handleAddProfile}>
+                Add new profile
+              </button>
+
+              <Profiles
+              deleteData={this.deleteData}
+              handleEditProfile={this.handleEditProfile}
+              data={this.state.data}
+              count={this.state.count}/>
+            </div>
+          )
+
         )}
       </div>
     );

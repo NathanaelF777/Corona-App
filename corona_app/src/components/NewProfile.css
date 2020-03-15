@@ -1,9 +1,4 @@
-a,
-a:hover {
-  color: black;
-}
-
-a .btn,
+.btn,
 label {
   margin-right: 1vw;
 }

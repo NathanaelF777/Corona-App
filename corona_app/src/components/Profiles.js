@@ -2,9 +2,6 @@ import React from "react";
 import "./Profiles.css";
 
 class Profiles extends React.Component {
-  constructor(props){
-    super(props)
-  }
 
   render() {
 
@@ -29,12 +26,14 @@ class Profiles extends React.Component {
                   <td className="location">{profile.location}</td>
                   <td className="diagnosed">{profile.diagnosed ? "Y" : " "}</td>
                   <td className="commands">
-                    <button className="btn btn-info">
+                    <button
+                    className="btn btn-info"
+                    onClick={() => {this.props.handleEditProfile(profile)}}>
                       <i className="fa fa-edit"></i>
                     </button>
                     <button
                     className="btn btn-danger"
-                    onClick={()=>{ this.props.deleteData(profile._id)}}>
+                    onClick={() => {this.props.deleteData(profile._id)}}>
                       <i className="fa fa-trash"></i>
                     </button>
                   </td>

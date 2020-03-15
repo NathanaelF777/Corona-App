@@ -1,7 +1,6 @@
 import React from "react";
-import "./NewProfile.css";
 
-class NewProfile extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,7 +96,7 @@ class NewProfile extends React.Component {
   render() {
     return (
       <div>
-        <h1>Create new profile</h1>
+        <h1>Profile: {this.props.currentProfile._id}</h1>
         <form onSubmit={this.handleAddProfile}>
           <table className="table table-info">
             <tbody>
@@ -108,6 +107,7 @@ class NewProfile extends React.Component {
                   size="60"
                   type="text"
                   name="name"
+                  value={this.props.currentProfile.name}
                   placeholder="(leave blank to remain anonymous)"
                   onChange={this.handleInputChange}/>
                 </td>
@@ -122,7 +122,9 @@ class NewProfile extends React.Component {
                   name="gender"
                   onChange={this.handleInputChange}
                   required>
-                    <option value=''/>
+                    <option value={this.props.currentProfile.gender}>
+                    {this.props.currentProfile.gender}
+                    </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -136,7 +138,7 @@ class NewProfile extends React.Component {
                   <input
                   type="number"
                   name="age"
-                  value={this.state.age}
+                  value={this.props.currentProfile.age}
                   onChange={this.handleInputChange}
                   required/>
                 </td>
@@ -149,6 +151,7 @@ class NewProfile extends React.Component {
                   type="text"
                   placeholder="New York, NY"
                   name="location"
+                  value={this.props.currentProfile.location}
                   onChange={this.handleInputChange}/>
                 </td>
               </tr>
@@ -194,13 +197,6 @@ class NewProfile extends React.Component {
                       </div>
                     : <div/>
                   }
-                  {/*<input
-                  type="text"
-                  size="60"
-                  name="symptoms"
-                  placeholder="symptoms, separated, by, commas"
-                  value={this.state.value}
-                  onChange={this.handleInputChange}/>*/}
                 </td>
               </tr>
 
@@ -213,7 +209,9 @@ class NewProfile extends React.Component {
                   name="tested"
                   onChange={this.handleInputChange}
                   required>
-                  <option value=""/>
+                  <option value={this.props.currentProfile.tested}>
+                    {this.props.currentProfile.tested.toString()}
+                  </option>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                   </select>
@@ -228,7 +226,9 @@ class NewProfile extends React.Component {
                   name="diagnosed"
                   onChange={this.handleInputChange}
                   required>
-                    <option value=""/>
+                    <option value={this.props.currentProfile.diagnosed}>
+                      {this.props.currentProfile.diagnosed.toString()}
+                    </option>
                     <option value="true">Positive</option>
                     <option value="false">Negative</option>
                   </select>
@@ -240,7 +240,7 @@ class NewProfile extends React.Component {
           <input
           type="submit"
           className="btn btn-primary"
-          value="Add Profile"/>
+          value="Edit Profile"/>
         </form>
 
       </div>
@@ -249,4 +249,4 @@ class NewProfile extends React.Component {
 
 }
 
-export default NewProfile;
+export default EditProfile;
