@@ -6,3 +6,8 @@ label {
 label {
   color: red
 }
+
+.other-symptom {
+    color: black;
+    background-color: #8eedaf
+}

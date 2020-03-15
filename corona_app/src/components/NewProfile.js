@@ -11,13 +11,16 @@ class NewProfile extends React.Component {
       location: 'Not given',
       symptoms: [],
       otherSymptomsInput: false,
+      otherSymptomsText: '',
+      otherSymptoms: [],
       tested: true,
       diagnosed: true,
-      symptomsClickValue: {}
+      symptomsClickValue: {},
     };
 
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.addOther = this.addOther.bind(this);
   }
 
   handleInputChange(event) {
@@ -69,7 +72,7 @@ class NewProfile extends React.Component {
     if (name === '') {
       controlSymptomsArrayInput()
     // Set state of 'other' symptoms
-  } else if (name === 'other') {
+} else if (name === '+') {
       this.setState({otherSymptomsInput: !this.state.otherSymptomsInput})
     // Set state of all other inputs
     } else {
@@ -92,6 +95,17 @@ class NewProfile extends React.Component {
     }
 
     this.props.handleProfileAdded(profile);
+  }
+
+  addOther(event){
+      const newSymptom = this.state.otherSymptomsText;
+      const newSymptomArray = this.state.otherSymptoms;
+      newSymptomArray.push(newSymptom)
+      this.setState({
+          otherSymptomsInput: false,
+          otherSymptomsText: '',
+          otherSymptoms: newSymptomArray
+      })
   }
 
   render() {
@@ -175,11 +189,24 @@ class NewProfile extends React.Component {
                   type="button"
                   value="Shortness of breath"
                   onClick={this.handleInputChange}/>
+              {this.state.otherSymptoms.map((symptom, i) => {
+                  return(
+                      <>
+                      <input
+                      className="btn other-symptom"
+                      id="other-symptom"
+                      type="button"
+                      value={symptom}
+                      key={i}
+                      />
+                      </>
+                  )
+              })}
                   <input
                   className="btn"
-                  name="other"
+                  name="+"
                   type="button"
-                  value="Other"
+                  value="+"
                   onClick={this.handleInputChange}/>
                   </div>
                   {this.state.otherSymptomsInput
@@ -188,9 +215,14 @@ class NewProfile extends React.Component {
                         style={{width:
                           document.getElementById('Cough').offsetWidth +
                           document.getElementById('Fever').offsetWidth +
-                          document.getElementsByName('other')[0].offsetWidth}}
+                          document.getElementsByName('+')[0].offsetWidth}}
                         type="text"
-                        placeholder="Type other symptoms here"/>
+                        id="other-symptoms"
+                        name="otherSymptomsText"
+                        value={this.state.otherSymptomsText}
+                        onChange={this.handleInputChange}
+                        placeholder="Other Symptoms:"/>
+                    <button type="button" className="btn" onClick={this.addOther} >Add</button>
                       </div>
                     : <div/>
                   }
@@ -224,6 +256,7 @@ class NewProfile extends React.Component {
                     <option value=""/>
                     <option value={true}>Positive</option>
                     <option value={false}>Negative</option>
+                    <option value={false}>Unknown</option>
                   </select>
                 </td>
               </tr>
