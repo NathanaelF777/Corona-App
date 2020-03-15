@@ -3,6 +3,11 @@ a:hover {
   color: black;
 }
 
-a .btn {
-  margin-left: 1vw;
+a .btn,
+label {
+  margin-right: 1vw;
+}
+
+label {
+  color: red
 }

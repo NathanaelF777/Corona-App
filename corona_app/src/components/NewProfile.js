@@ -11,7 +11,9 @@ class NewProfile extends React.Component {
       location: 'Not given',
       symptoms: [],
       tested: true,
-      diagnosed: true
+      diagnosed: true,
+      symptomsClickValue: {
+      }
     };
 
     this.handleAddProfile = this.handleAddProfile.bind(this);
@@ -23,18 +25,53 @@ class NewProfile extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+    // Change background of clicked button
     const buttonClick = () => {
-        event.target.style.color = 'black'
-        event.target.style.backgroundColor = '#8eedaf'
+      event.target.style.color = 'black'
+      event.target.style.backgroundColor = '#8eedaf'
+    }
+    // Allow for clicking and 'unclicking.' Push into array if clicked, remove if 'unclicked'
+    const controlSymptomsArrayInput = () => {
+      // If button is clicked
+      if (this.state.symptomsClickValue[value]) {
+        event.target.style.backgroundColor = '#ddd'
+        const index = this.state.symptoms.findIndex((symptom => symptom === value))
+        this.state.symptoms.splice(index, 1)
+
+      // If button is not clicked
+      } else {
+        // If there are no symptoms, push first symptom into the array
+        if (this.state.symptoms.length === 0) {
+          this.state.symptoms.push(value)
+
+        // Ensure that each symptom is pushed only once
+        } else {
+          for (let i = 0; i < this.state.symptoms.length; i++) {
+            if (value !== this.state.symptoms[i]) {
+            this.state.symptoms.push(value)
+            }
+          }
+        }
+      }
+      // Change button clicked state
+      this.state.symptomsClickValue[value] = !this.state.symptomsClickValue[value]
+      this.setState({
+        symptomsClickValue: this.state.symptomsClickValue,
+        symptoms: this.state.symptoms
+      })
     }
 
     if (target.className === 'btn') {
       buttonClick()
     }
 
+    // Set state of symptoms
     if (name === '') {
-      this.state.symptoms.push(value)
-      this.setState({symptoms: this.state.symptoms})
+      controlSymptomsArrayInput()
+    // Set state of other symptoms
+    } else if (name === 'other') {
+      console.log('other');
+    // Set state of all other inputs
     } else {
       this.setState({[name]: value});
     }
@@ -77,6 +114,7 @@ class NewProfile extends React.Component {
               <tr>
                 <th>Gender</th>
                 <td>
+                  <label>*</label>
                   <select
                   className="btn"
                   name="gender"
@@ -92,6 +130,7 @@ class NewProfile extends React.Component {
               <tr>
                 <th>Age</th>
                 <td>
+                  <label>*</label>
                   <input
                   type="number"
                   name="age"
@@ -152,24 +191,28 @@ class NewProfile extends React.Component {
               <tr>
                 <th>Tested</th>
                 <td>
-                  <label>
-                    Tested
-                    <input
-                    type="checkbox"
-                    name="tested"
-                    value={this.state.tested}
-                    onChange={this.handleInputChange}/>
-                  </label>
+                  <label>*</label>
+                  <select
+                  className="btn"
+                  name="tested"
+                  onChange={this.handleInputChange}
+                  required>
+                  <option value=""/>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                  </select>
                 </td>
               </tr>
               <tr>
                 <th>Diagnosed</th>
                 <td>
+                  <label>*</label>
                   <select
                   className="btn"
                   name="diagnosed"
-                  value={this.state.diagnosed}
-                  onChange={this.handleInputChange}>
+                  onChange={this.handleInputChange}
+                  required>
+                    <option value=""/>
                     <option value="true">Positive</option>
                     <option value="false">Negative</option>
                   </select>
