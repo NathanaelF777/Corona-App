@@ -95,7 +95,11 @@ class EditProfile extends React.Component {
   addOther(event) {
     const newSymptom = this.state.otherSymptomsText;
     const newSymptomArray = this.state.otherSymptoms;
-    newSymptomArray.push(newSymptom);
+
+    if (newSymptom && newSymptom.trim() !== "") {
+      newSymptomArray.push(newSymptom);
+    }
+
     this.setState({
       otherSymptomsInput: false,
       otherSymptomsText: "",
