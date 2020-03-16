@@ -1,6 +1,3 @@
-body {
-  text-align: center;
-}
 .results {
   display: flex;
   justify-content: space-between;
@@ -20,6 +17,7 @@ iframe {
 .container h1 {
   background-color: rgb(135, 227, 250);
   border-radius: 5px;
-  height: 50px;
-  width: 100%
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
 }

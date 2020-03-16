@@ -7,7 +7,9 @@ class Profiles extends React.Component {
     this.state = {
       count: 0
     };
+
     this.updateCount = this.updateCount.bind(this);
+    this.showProfile = this.showProfile.bind(this);
   }
 
   updateCount() {
@@ -27,37 +29,53 @@ class Profiles extends React.Component {
     this.updateCount();
   }
 
-  render() {
+  showProfile(event, index) {
+    event.preventDefault();
+    this.props.handleShowProfile(index);
+  }
 
+  render() {
     return (
       <div className="profiles-list">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th className="text-center">Gender</th>
-              <th className="text-center">Age</th>
-              <th className="text-center">Location</th>
-              <th className="text-center">Diagnosed</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Location</th>
+              <th>Diagnosed</th>
+              <th>{" "}</th>
             </tr>
           </thead>
 
           <tbody>
             {this.props.data.map((profile, i) => {
+              const currentIndex = i;
               return (
                 <tr key={profile._id}>
-                  <td className="gender">{profile.gender}</td>
+                  <td className="gender">
+                    <a href="#show" onClick={event => this.showProfile(event, currentIndex)}>
+                      {profile.gender}
+                    </a>
+                  </td>
                   <td className="age">{profile.age}</td>
                   <td className="location">{profile.location}</td>
                   <td className="diagnosed">{profile.diagnosed ? "Y" : " "}</td>
                   <td className="commands">
                     <button
-                    className="btn btn-info"
-                    onClick={() => {this.props.handleEditProfile(i)}}>
+                      className="btn btn-info"
+                      onClick={() => {
+                        this.props.handleEditProfile(currentIndex);
+                      }}
+                    >
                       <i className="fa fa-edit"></i>
                     </button>
                     <button
-                    className="btn btn-danger"
-                    onClick={() => {this.props.deleteData(profile._id)}}>
+                      className="btn btn-danger"
+                      onClick={() => {
+                        this.props.deleteData(profile._id);
+                      }}
+                    >
                       <i className="fa fa-trash"></i>
                     </button>
                   </td>
