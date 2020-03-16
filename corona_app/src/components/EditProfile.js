@@ -10,11 +10,15 @@ class EditProfile extends React.Component {
       gender: this.props.currentProfile.gender,
       location: this.props.currentProfile.location,
       symptoms: [],
+      otherSymptomsInput: false,
+      otherSymptomsText: '',
+      otherSymptoms: [],
       tested: this.props.currentProfile.tested,
       diagnosed: this.props.currentProfile.diagnosed,
       symptomsClickValue: {}
     };
-
+    this.addOther = this.addOther.bind(this);
+    this.removeOther = this.removeOther.bind(this)
     this.handleEditProfile = this.handleEditProfile.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAddMore = this.handleAddMore.bind(this)
@@ -53,7 +57,7 @@ class EditProfile extends React.Component {
     if (name === '') {
       controlSymptomsArrayInput()
     // Set state of 'other' symptoms
-  } else if (name === 'other') {
+  } else if (name === '+') {
     this.state.symptomsClickValue[value] = !this.state.symptomsClickValue[value]
     this.setState({symptomsClickValue: this.state.symptomsClickValue})
     if (!this.state.symptomsClickValue[value]) {
@@ -87,9 +91,30 @@ class EditProfile extends React.Component {
     }, 500);
   }
 
+  addOther(event){
+      const newSymptom = this.state.otherSymptomsText;
+      const newSymptomArray = this.state.otherSymptoms;
+      newSymptomArray.push(newSymptom)
+      this.setState({
+          otherSymptomsInput: false,
+          otherSymptomsText: '',
+          otherSymptoms: newSymptomArray
+      })
+  }
+
+  removeOther(value){
+      console.log(value);
+      const index = this.state.otherSymptoms.findIndex((symptom => symptom === value))
+      console.log(index);
+      this.state.otherSymptoms.splice(index, 1)
+      this.setState({
+          otherSymptoms: this.state.otherSymptoms
+      })
+  }
+
   handleEditProfile(event) {
     event.preventDefault()
-
+    this.state.symptoms = [...this.state.symptoms, ...this.state.otherSymptoms];
     const profile = {
       name: this.state.name,
       age: this.state.age,
@@ -128,20 +153,17 @@ class EditProfile extends React.Component {
               <tr>
                 <th>Gender</th>
                 <td>
-                  <label>*</label>
                   <select
                   className="btn"
                   style={{backgroundColor: "#8eedaf"}}
                   name="gender"
-                  onChange={this.handleInputChange}
-                  required>
+                  onChange={this.handleInputChange}>
                     <option value={this.state.gender}>
                     {this.props.currentProfile.gender}
                     </option>
                     {this.state.gender === "Male" ?
                       <option value="Female">Female</option>
                     : <option value="Male">Male</option>}
-
                   </select>
                 </td>
               </tr>
@@ -149,13 +171,11 @@ class EditProfile extends React.Component {
               <tr>
                 <th>Age</th>
                 <td>
-                  <label>*</label>
                   <input
                   type="number"
                   name="age"
                   value={this.state.age}
-                  onChange={this.handleInputChange}
-                  required/>
+                  onChange={this.handleInputChange}/>
                 </td>
               </tr>
 
@@ -186,28 +206,42 @@ class EditProfile extends React.Component {
                         className="btn"
                         onClick={this.handleInputChange}/>)
                       })}
+                      {this.state.otherSymptoms.map((symptom, i) => {
+                        return(
+                          <input
+                          className="btn"
+                          style={{backgroundColor: '#8eedaf'}}
+                          id="other-symptom"
+                          type="button"
+                          value={symptom}
+                          onClick={()=>{this.removeOther(symptom)}}
+                          key={i}
+                          />
+                        )
+                      })}
+
                       <input
                       className="btn"
-                      name="other"
+                      name="+"
                       type="button"
-                      value="Other"
+                      value="+"
                       onClick={this.handleInputChange}/>
                     </div>
                     {this.state.otherSymptomsInput
                       ? <div style={{marginTop: "2vw"}}>
                           <input
-                          className="additionalSymptoms"
-                          style={{width: 290}}
+                          style={{width:290}}
                           type="text"
-                          placeholder="Type other symptom here"/>
+                          id="other-symptoms"
+                          name="otherSymptomsText"
+                          value={this.state.otherSymptomsText}
+                          onChange={this.handleInputChange}
+                          placeholder="Other Symptoms:"/>
                           <button
-                          style={{
-                            padding: '2px',
-                            marginTop: 0
-                          }}
+                          style={{marginTop: 0}}
                           id="addMore"
                           className="btn"
-                          onClick={this.handleAddMore}>
+                          onClick={this.addOther}>
                             Add
                           </button>
                         </div>
