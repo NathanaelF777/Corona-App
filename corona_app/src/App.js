@@ -23,6 +23,7 @@ class App extends React.Component {
       selectedProfile: null,
       count: 0
     };
+    
     this.getData = this.getData.bind(this);
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleProfileAdded = this.handleProfileAdded.bind(this);
@@ -31,7 +32,7 @@ class App extends React.Component {
     this.handleEditProfile = this.handleEditProfile.bind(this);
     this.updateCount = this.updateCount.bind(this);
     this.handleShowProfile = this.handleShowProfile.bind(this);
-    this.handleBackFromShow = this.handleBackFromShow.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +40,7 @@ class App extends React.Component {
   }
 
   updateCount() {
-    //Need to run this function whenever a new patient is submitted.
+    // Need to run this function whenever a new patient is submitted.
     let tempCount = 0;
     for (let i = 0; i < this.state.data.length; i++) {
       if (this.state.data[i].diagnosed) {
@@ -78,17 +79,19 @@ class App extends React.Component {
     });
   }
 
-  handleBackFromShow() {
-    this.setState({
-      showProfile: false,
-      selectedProfile: null
-    });
-  }
-
   handleEditProfile(i) {
     this.setState({
       editProfile: true,
       currentIndex: i
+    });
+  }
+
+  handleCancel() {
+    this.setState({
+      addProfile: false,
+      editProfile: false,
+      showProfile: false,
+      selectedProfile: null
     });
   }
 
@@ -149,11 +152,11 @@ class App extends React.Component {
     return (
       <div className="container">
         {this.state.addProfile ? (
-          <NewProfile handleProfileAdded={this.handleProfileAdded} data={this.state.data} />
+          <NewProfile handleProfileAdded={this.handleProfileAdded} data={this.state.data} handleCancel={this.handleCancel} />
         ) : this.state.editProfile ? (
-          <EditProfile editData={this.editData} currentProfile={this.state.data[this.state.currentIndex]} />
+          <EditProfile editData={this.editData} currentProfile={this.state.data[this.state.currentIndex]} handleCancel={this.handleCancel} />
         ) : this.state.showProfile ? (
-          <ShowProfile profile={this.state.selectedProfile} handleBack={this.handleBackFromShow} />
+          <ShowProfile profile={this.state.selectedProfile} handleBack={this.handleCancel} />
         ) : (
           <div>
             <h1>Corona Stats</h1>

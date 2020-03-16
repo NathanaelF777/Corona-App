@@ -235,6 +235,7 @@ class NewProfile extends React.Component {
           </table>
 
           <input type="submit" className="btn btn-primary" value="Add profile" />
+          <button className="btn btn-warning" onClick={this.props.handleCancel}>Cancel</button>
         </form>
       </div>
     );

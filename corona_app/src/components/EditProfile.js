@@ -258,6 +258,7 @@ class EditProfile extends React.Component {
           </table>
 
           <input type="submit" className="btn btn-primary" value="Update Profile" />
+          <button className="btn btn-warning" onClick={this.props.handleCancel}>Cancel</button>
         </form>
       </div>
     );

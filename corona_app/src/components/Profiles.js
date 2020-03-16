@@ -60,7 +60,7 @@ class Profiles extends React.Component {
                   </td>
                   <td className="age">{profile.age}</td>
                   <td className="location">{profile.location}</td>
-                  <td className="diagnosed">{profile.diagnosed ? "Y" : " "}</td>
+                  <td className="diagnosed">{profile.diagnosed ? "Positive" : " "}</td>
                   <td className="commands">
                     <button
                       className="btn btn-info"
