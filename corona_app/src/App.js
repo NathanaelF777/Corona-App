@@ -118,6 +118,7 @@ class App extends React.Component {
   let updatedProfile = await response.json()
   this.state.data[this.state.currentIndex] = updatedProfile
   this.setState({data: this.state.data})
+  this.updateCount()
   }catch(e){
     console.error(e)
   }
