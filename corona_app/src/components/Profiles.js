@@ -2,6 +2,30 @@ import React from "react";
 import "./Profiles.css";
 
 class Profiles extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+    this.updateCount = this.updateCount.bind(this);
+  }
+
+  updateCount() {
+    //Need to run this function whenever a new patient is submitted.
+    let tempCount = this.state.count;
+    for (const p of this.props.data) {
+      if (p.diagnosed) {
+        tempCount = tempCount + 1;
+      }
+    }
+    this.setState({
+      count: tempCount
+    });
+  }
+
+  componentDidMount() {
+    this.updateCount();
+  }
 
   render() {
 
@@ -41,11 +65,11 @@ class Profiles extends React.Component {
               );
             })}
           </tbody>
-
-          <tfoot>
+          <tfoot className="bg-warning font-weight-bolder">
             <tr>
               <td colSpan="3">Total diagnosed:</td>
-              <td>{this.props.count}</td>
+              <td>{this.state.count}</td>
+              <td> </td>
             </tr>
           </tfoot>
         </table>

@@ -16,3 +16,10 @@ iframe {
   margin: auto;
   margin-top: 2vh
 }
+
+.container h1 {
+  background-color: rgb(135, 227, 250);
+  border-radius: 5px;
+  height: 50px;
+  width: 100%
+}
