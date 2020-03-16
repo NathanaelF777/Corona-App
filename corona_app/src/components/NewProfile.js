@@ -235,7 +235,7 @@ class NewProfile extends React.Component {
                         value={this.state.otherSymptomsText}
                         onChange={this.handleInputChange}
                         placeholder="Other Symptoms:"/>
-                    <button type="button" className="btn" onClick={this.addOther} >Add</button>
+                    <button style="{{marginTop: 0}}" type="button" className="btn" onClick={this.addOther} >Add</button>
                       </div>
                     : <div/>
                   }
