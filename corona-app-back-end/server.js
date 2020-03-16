@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const PORT = 3003
 
-
 // Database Connection
 
 // ** on error/disconnect
