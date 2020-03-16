@@ -8,7 +8,7 @@ const profileSchema = mongoose.Schema({
   symptoms: [{type: String}],
   tested: Boolean,
   diagnosed: Boolean,
-  condition: {type: Boolean, required: true}
+  // condition: {type: Boolean, required: true}
 }, {
     timestamps: true
 })

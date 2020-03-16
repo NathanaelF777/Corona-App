@@ -1,0 +1,16 @@
+input {
+    text-align: center;
+}
+
+.btn {
+  margin-top: 2vw;
+}
+
+.btn,
+label {
+  margin-left: 1vw;
+}
+
+label {
+  color: red
+}
