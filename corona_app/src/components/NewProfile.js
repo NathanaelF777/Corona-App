@@ -11,11 +11,14 @@ class NewProfile extends React.Component {
       location: 'Not given',
       symptoms: [],
       otherSymptomsInput: false,
+      otherSymptomsText: '',
+      otherSymptoms: [],
       tested: true,
       diagnosed: true,
       symptomsClickValue: {}
     };
-    this.handleAddMore = this.handleAddMore.bind(this)
+    this.addOther = this.addOther.bind(this);
+    this.removeOther = this.removeOther.bind(this)
     this.handleAddProfile = this.handleAddProfile.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -38,7 +41,7 @@ class NewProfile extends React.Component {
       this.setState({symptomsClickValue: this.state.symptomsClickValue})
       // If button is 'unclicked'
       if (!this.state.symptomsClickValue[value]) {
-        event.target.style.backgroundColor = '#ddd'
+        event.target.style.backgroundColor = '#ffffff'
         const index = this.state.symptoms.findIndex((symptom => symptom === value))
         this.state.symptoms.splice(index, 1)
 
@@ -72,7 +75,7 @@ class NewProfile extends React.Component {
     if (name === '') {
       controlSymptomsArrayInput()
     // Set state of 'other' symptoms
-  } else if (name === 'other') {
+} else if (name === '+') {
       this.setState({otherSymptomsInput: !this.state.otherSymptomsInput})
     // Set state of all other inputs
     } else {
@@ -80,27 +83,30 @@ class NewProfile extends React.Component {
     }
   }
 
-  handleAddMore(event) {
-    event.preventDefault()
-    // Push value into symptoms array
-    const oldInput = document.querySelector('.additionalSymptoms')
-    this.state.symptoms.push(oldInput.value)
-    this.setState({symptoms: this.state.symptoms})
+  addOther(event){
+      const newSymptom = this.state.otherSymptomsText;
+      const newSymptomArray = this.state.otherSymptoms;
+      newSymptomArray.push(newSymptom)
+      this.setState({
+          otherSymptomsInput: false,
+          otherSymptomsText: '',
+          otherSymptoms: newSymptomArray
+      })
+  }
 
-    // Create new input and remove old input
-    const newInput = document.createElement("INPUT")
-    newInput.style.width = `${oldInput.offsetWidth}px`
-    oldInput.remove()
-    const addMore = document.querySelector('#addMore')
-    setTimeout(function(){
-      newInput.className = 'additionalSymptoms'
-      newInput.placeholder = 'Type other symptom here'
-      addMore.insertAdjacentElement('beforebegin', newInput)
-    }, 500);
+  removeOther(value){
+      console.log(value);
+      const index = this.state.otherSymptoms.findIndex((symptom => symptom === value))
+      console.log(index);
+      this.state.otherSymptoms.splice(index, 1)
+      this.setState({
+          otherSymptoms: this.state.otherSymptoms
+      })
   }
 
   handleAddProfile(event) {
-    event.preventDefault()
+    event.preventDefault();
+    this.state.symptoms = [...this.state.symptoms, ...this.state.otherSymptoms];
     const profile = {
       name: this.state.name,
       age: this.state.age,
@@ -110,7 +116,7 @@ class NewProfile extends React.Component {
       tested: this.state.tested,
       diagnosed: this.state.diagnosed
     }
-
+    console.log(profile);
     this.props.handleProfileAdded(profile);
   }
 
@@ -195,33 +201,41 @@ class NewProfile extends React.Component {
                   type="button"
                   value="Shortness of breath"
                   onClick={this.handleInputChange}/>
+              {this.state.otherSymptoms.map((symptom, i) => {
+                  return(
+                      <>
+                      <input
+                      className="btn other-symptom"
+                      id="other-symptom"
+                      type="button"
+                      value={symptom}
+                      onClick={()=>{this.removeOther(symptom)}}
+                      key={i}
+                      />
+                      </>
+                  )
+              })}
                   <input
                   className="btn"
-                  name="other"
+                  name="+"
                   type="button"
-                  value="Other"
+                  value="+"
                   onClick={this.handleInputChange}/>
                   </div>
                   {this.state.otherSymptomsInput
-                    ? <div style={{marginTop: "2vw"}}>
+                    ? <div style={{marginTop: "1vw"}}>
                         <input
-                        className="additionalSymptoms"
                         style={{width:
                           document.getElementById('Cough').offsetWidth +
                           document.getElementById('Fever').offsetWidth +
-                          document.getElementsByName('other')[0].offsetWidth}}
+                          document.getElementsByName('+')[0].offsetWidth}}
                         type="text"
-                        placeholder="Type other symptom here"/>
-                        <button
-                        style={{
-                          padding: '2px',
-                          marginTop: 0
-                        }}
-                        id="addMore"
-                        className="btn"
-                        onClick={this.handleAddMore}>
-                          Add
-                        </button>
+                        id="other-symptoms"
+                        name="otherSymptomsText"
+                        value={this.state.otherSymptomsText}
+                        onChange={this.handleInputChange}
+                        placeholder="Other Symptoms:"/>
+                    <button type="button" className="btn" onClick={this.addOther} >Add</button>
                       </div>
                     : <div/>
                   }
