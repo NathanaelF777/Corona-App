@@ -1,0 +1,18 @@
+.profiles-list {
+    margin-top: 40px;
+}
+
+.diagnosed {
+    color: red;
+    font-weight: bolder;
+}
+
+.commands button {
+    font-weight: bolder;
+    margin-right: 10px;
+}
+
+.other-symptom{
+    color: black;
+    background-color: #8eedaf;
+}

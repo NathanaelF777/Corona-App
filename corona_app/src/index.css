@@ -1,0 +1,23 @@
+.results {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+iframe {
+  border: none;
+  height: 30vw;
+  min-height: 300px;
+  width: 30vw;
+  min-width: 300px;
+  margin: auto;
+  margin-top: 2vh
+}
+
+.container h1 {
+  background-color: rgb(135, 227, 250);
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
