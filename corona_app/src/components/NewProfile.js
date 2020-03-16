@@ -203,16 +203,15 @@ class NewProfile extends React.Component {
                   onClick={this.handleInputChange}/>
               {this.state.otherSymptoms.map((symptom, i) => {
                   return(
-                      <>
                       <input
-                      className="btn other-symptom"
+                      style={{backgroundColor: '#8eedaf'}}
+                      className="btn"
                       id="other-symptom"
                       type="button"
                       value={symptom}
                       onClick={()=>{this.removeOther(symptom)}}
                       key={i}
                       />
-                      </>
                   )
               })}
                   <input
@@ -225,17 +224,14 @@ class NewProfile extends React.Component {
                   {this.state.otherSymptomsInput
                     ? <div style={{marginTop: "1vw"}}>
                         <input
-                        style={{width:
-                          document.getElementById('Cough').offsetWidth +
-                          document.getElementById('Fever').offsetWidth +
-                          document.getElementsByName('+')[0].offsetWidth}}
+                        style={{width:290}}
                         type="text"
                         id="other-symptoms"
                         name="otherSymptomsText"
                         value={this.state.otherSymptomsText}
                         onChange={this.handleInputChange}
                         placeholder="Other Symptoms:"/>
-                    <button style="{{marginTop: 0}}" type="button" className="btn" onClick={this.addOther} >Add</button>
+                    <button style={{marginTop: 0}} type="button" className="btn" onClick={this.addOther} >Add</button>
                       </div>
                     : <div/>
                   }
