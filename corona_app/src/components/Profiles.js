@@ -44,7 +44,7 @@ class Profiles extends React.Component {
               <th>Age</th>
               <th>Location</th>
               <th>Diagnosed</th>
-              <th>{" "}</th>
+              <th> </th>
             </tr>
           </thead>
 
@@ -86,7 +86,7 @@ class Profiles extends React.Component {
           <tfoot className="bg-warning font-weight-bolder">
             <tr>
               <td colSpan="3">Total diagnosed:</td>
-              <td>{this.state.count}</td>
+              <td>{this.props.data.filter(p => p.diagnosed).length}</td>
               <td> </td>
             </tr>
           </tfoot>
